@@ -1,0 +1,233 @@
+· <abstract> Ropa
+	|· <abstract> PrendaSuperior
+		· Camiseta
+		· Sudadera
+		· Body
+	|· <abstract> PrendaInferior
+		· Cargo
+		· Vaquero
+		· Falda
+	|· <abstract> PrendaCuerpoCompleto
+		· Vestido
+
+· Cliente
+· Pedido
+· GestorRopa
+
+<interface> Personalizable
+<interface> CuidadoEspecial
+<interface> EmpaquetablePremium
+
+Exceptions:
+-> StockAgotadoException
+-> ArticuloNoEncontradoException
+-> EstadoPedidoInvalidoException
+
+------------------------------------------------------------
+<<abstract>> Ropa
+------------------------------------------------------------
+- idArticulo: String
+- nombre: String
+- precio: double
+- talla: String
+- stock: int
+------------------------------------------------------------
++ Ropa(idArticulo, nombre, precio, talla, stock)
++ getIdArticulo(): String
++ getNombre(): String
++ getPrecio(): double
++ getTalla(): String
++ getStock(): int
++ verificarDisponibilidad(): boolean
++ <abstract> toString(): String
++ equals(obj: Object): boolean
++ hashCode(): int
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+<<abstract>> PrendaSuperior extends Ropa
+------------------------------------------------------------
+- tipoManga: String
+------------------------------------------------------------
++ PrendaSuperior(idArticulo, nombre, precio, talla, stock, tipoManga)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+<<abstract>> PrendaInferior extends Ropa
+------------------------------------------------------------
+- largo: String
+------------------------------------------------------------
++ PrendaInferior(idArticulo, nombre, precio, talla, stock, largo)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+<<abstract>> PrendaCuerpoCompleto extends Ropa
+------------------------------------------------------------
+- largo: String
+------------------------------------------------------------
++ PrendaCuerpoCompleto(idArticulo, nombre, precio, talla, stock, largo)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Camiseta extends PrendaSuperior implements Personalizable
+------------------------------------------------------------
++ Camiseta(idArticulo, nombre, precio, talla, stock, tipoManga)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Sudadera extends PrendaSuperior implements Personalizable
+------------------------------------------------------------
+- tieneCapucha: boolean
+------------------------------------------------------------
++ Sudadera(idArticulo, nombre, precio, talla, stock, tipoManga, tieneCapucha)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Body extends PrendaSuperior
+------------------------------------------------------------
+- tipoCierre: String
+------------------------------------------------------------
++ Body(idArticulo, nombre, precio, talla, stock, tipoManga, tipoCierre)
++ toString(): String
+------------------------------------------------------------
+
+------------------------------------------------------------
+Cargo extends PrendaInferior
+------------------------------------------------------------
+- numeroBolsillos: int
+------------------------------------------------------------
++ Cargo(idArticulo, nombre, precio, talla, stock, largo, numeroBolsillos)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Vaquero extends PrendaInferior
+------------------------------------------------------------
++ Vaquero(idArticulo, nombre, precio, talla, stock, largo)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Falda extends PrendaInferior implements CuidadoEspecial
+------------------------------------------------------------
+- tieneVolantes: boolean
+------------------------------------------------------------
++ Falda(idArticulo, nombre, precio, talla, stock, largo, tieneVolantes)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Vestido extends PrendaCuerpoCompleto implements CuidadoEspecial, EmpaquetablePremium
+------------------------------------------------------------
+- ocasion: String
+------------------------------------------------------------
++ Vestido(idArticulo, nombre, precio, talla, stock, largo, ocasion)
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Cliente
+------------------------------------------------------------
+- idCliente: String
+- nombre: String
+- email: String
+- telefono: String
+------------------------------------------------------------
++ Cliente(idCliente, nombre, email, telefono)
++ toString(): String
++ equals(obj: Object): boolean
++ hashCode(): int
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+enum EstadoPedido
+------------------------------------------------------------
+PENDIENTE
+COMPLETADO
+CANCELADO
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+Pedido
+------------------------------------------------------------
+- idPedido: String
+- cliente: Cliente
+- listaRopa: ArrayList<Ropa>
+- estado: EstadoPedido
+------------------------------------------------------------
++ Pedido(idPedido, cliente)
++ agregarRopa(ropa: Ropa): void throws StockAgotadoException
++ eliminarRopa(ropa: Ropa): void
++ cambiarEstado(nuevoEstado: EstadoPedido): void throws EstadoPedidoInvalidoException
++ toString(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+GestorRopa
+------------------------------------------------------------
+- inventario: HashMap<String, Ropa>
+- clientes: HashSet<Cliente>
+- historialPedidos: ArrayList<Pedido>
+------------------------------------------------------------
++ GestorRopa()
++ guardarDatos(): void
++ cargarDatos(): void
++ agregarRopa(ropa: Ropa): void
++ eliminarRopa(idArticulo: String): void throws ArticuloNoEncontradoException
++ buscarRopa(idArticulo: String): Ropa throws ArticuloNoEncontradoException
++ crearPedido(cliente: Cliente): Pedido
++ calcularIngresosTotales(): double
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+<<interface>> Personalizable
+------------------------------------------------------------
++ getOpcionesPersonalizacion(): ArrayList<String>
++ aplicarPersonalizacion(opcion: String): void
++ getCostePersonalizacion(): double
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+<<interface>> CuidadoEspecial
+------------------------------------------------------------
++ getInstruccionesCuidado(): String
+------------------------------------------------------------
+
+
+------------------------------------------------------------
+<<interface>> EmpaquetablePremium
+------------------------------------------------------------
++ activarEmpaquetadoPremium(): void
++ anadirTarjetaPersonalizada(mensaje: Strin: void
++ getCosteEmpaquetadoPremium(): double
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
