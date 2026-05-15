@@ -84,7 +84,7 @@ Camiseta extends PrendaSuperior implements Personalizable
 
 
 ------------------------------------------------------------
-Sudadera extends PrendaSuperior implements Personalizable
+Sudadera extends PrendaSuperior implements EmpaquetablePremium
 ------------------------------------------------------------
 - tieneCapucha: boolean
 ------------------------------------------------------------
@@ -94,7 +94,7 @@ Sudadera extends PrendaSuperior implements Personalizable
 
 
 ------------------------------------------------------------
-Body extends PrendaSuperior
+Body extends PrendaSuperior implements CuidadoEspecial
 ------------------------------------------------------------
 - tipoCierre: String
 ------------------------------------------------------------
@@ -174,8 +174,9 @@ Pedido
 ------------------------------------------------------------
 + Pedido(idPedido, cliente)
 + agregarRopa(ropa: Ropa): void throws StockAgotadoException
-+ eliminarRopa(ropa: Ropa): void
++ eliminarRopa(ropa: Ropa): void throws ArticuloNoEncontradoException 
 + cambiarEstado(nuevoEstado: EstadoPedido): void throws EstadoPedidoInvalidoException
++ calcularTotal(): double
 + toString(): String
 ------------------------------------------------------------
 
@@ -218,11 +219,9 @@ GestorRopa
 <<interface>> EmpaquetablePremium
 ------------------------------------------------------------
 + activarEmpaquetadoPremium(): void
-+ anadirTarjetaPersonalizada(mensaje: Strin: void
++ anadirTarjetaPersonalizada(mensaje: String): void
 + getCosteEmpaquetadoPremium(): double
 ------------------------------------------------------------
-
-
 
 
 
