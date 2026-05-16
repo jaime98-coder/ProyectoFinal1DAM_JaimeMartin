@@ -218,7 +218,7 @@ GestorRopa
 ------------------------------------------------------------
 <<interface>> EmpaquetablePremium
 ------------------------------------------------------------
-+ activarEmpaquetadoPremium(): void
++ aplicarEmpaquetadoPremium(): void
 + anadirTarjetaPersonalizada(mensaje: String): void
 + getCosteEmpaquetadoPremium(): double
 ------------------------------------------------------------
