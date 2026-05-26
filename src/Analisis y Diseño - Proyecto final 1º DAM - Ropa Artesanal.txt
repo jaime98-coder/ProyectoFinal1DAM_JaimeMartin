@@ -39,6 +39,8 @@ Exceptions:
 + getTalla(): String
 + getStock(): int
 + verificarDisponibilidad(): boolean
++ getFichaArchivo(): String
++ setStock(stock: int): void
 + <abstract> toString(): String
 + equals(obj: Object): boolean
 + hashCode(): int
@@ -78,6 +80,8 @@ Exceptions:
 ------------------------------------------------------------
 Camiseta extends PrendaSuperior implements Personalizable
 ------------------------------------------------------------
+- personalizacionAplicada: String
+------------------------------------------------------------
 + Camiseta(idArticulo, nombre, precio, talla, stock, tipoManga)
 + toString(): String
 ------------------------------------------------------------
@@ -87,6 +91,7 @@ Camiseta extends PrendaSuperior implements Personalizable
 Sudadera extends PrendaSuperior implements EmpaquetablePremium
 ------------------------------------------------------------
 - tieneCapucha: boolean
+- empaquetadoPremiumActivado: boolean
 ------------------------------------------------------------
 + Sudadera(idArticulo, nombre, precio, talla, stock, tipoManga, tieneCapucha)
 + toString(): String
@@ -134,6 +139,7 @@ Falda extends PrendaInferior implements CuidadoEspecial
 Vestido extends PrendaCuerpoCompleto implements CuidadoEspecial, EmpaquetablePremium
 ------------------------------------------------------------
 - ocasion: String
+- empaquetadoPremiumActivado: boolean
 ------------------------------------------------------------
 + Vestido(idArticulo, nombre, precio, talla, stock, largo, ocasion)
 + toString(): String
@@ -143,12 +149,16 @@ Vestido extends PrendaCuerpoCompleto implements CuidadoEspecial, EmpaquetablePre
 ------------------------------------------------------------
 Cliente
 ------------------------------------------------------------
-- idCliente: String
+- dniCliente: String
 - nombre: String
 - email: String
 - telefono: String
 ------------------------------------------------------------
-+ Cliente(idCliente, nombre, email, telefono)
++ Cliente(dniCliente, nombre, email, telefono)
++ Cliente (otro: Cliente)
++ getFichaArchivo(): String
++ getDniCliente(): String
++ getNombre(): String
 + toString(): String
 + equals(obj: Object): boolean
 + hashCode(): int
@@ -173,10 +183,15 @@ Pedido
 - estado: EstadoPedido
 ------------------------------------------------------------
 + Pedido(idPedido, cliente)
++ getIdPedido(): String
++ getCliente(): Cliente
++ getListaRopa(): ArrayList<Ropa>
++ getEstado(): EstadoPedido
 + agregarRopa(ropa: Ropa): void throws StockAgotadoException
 + eliminarRopa(ropa: Ropa): void throws ArticuloNoEncontradoException 
 + cambiarEstado(nuevoEstado: EstadoPedido): void throws EstadoPedidoInvalidoException
-+ calcularTotal(): double
++ calcularTotal(): doublé
++ getFichaArchivo(): String
 + toString(): String
 ------------------------------------------------------------
 
@@ -195,7 +210,14 @@ GestorRopa
 + eliminarRopa(idArticulo: String): void throws ArticuloNoEncontradoException
 + buscarRopa(idArticulo: String): Ropa throws ArticuloNoEncontradoException
 + crearPedido(cliente: Cliente): Pedido
-+ calcularIngresosTotales(): double
++ calcularIngresosTotales(): doublé
++ getCatalogoCompleto(): ArrayList<Ropa>
++ buscarClientePorDni(dni: String): Cliente
+	Métodos de búsqueda y filtrado:
++ buscarPorTalla(talla: String): ArrayList<Ropa>
++ buscarPorPrecioMax(max: double): ArrayList<Ropa>
++ getArticulosPersonalizables(): ArrayList<Personalizable>
++ getPrendasOrdenadasPorPrecio(): ArrayList<Ropa>
 ------------------------------------------------------------
 
 
@@ -219,12 +241,47 @@ GestorRopa
 <<interface>> EmpaquetablePremium
 ------------------------------------------------------------
 + aplicarEmpaquetadoPremium(): void
-+ anadirTarjetaPersonalizada(mensaje: String): void
 + getCosteEmpaquetadoPremium(): double
++ anadirTarjetaPersonalizada(mensaje: String): void
 ------------------------------------------------------------
 
 
+------------------------------------------------------------
+ Menu
+------------------------------------------------------------
+- sc: Scanner
+- gestor: GestorRopa
++ Menu(gestor: GestorRopa)
+------------------------------------------------------------
+iniciar(): void
+mostrarMenuPrincipal(): void
+menuCatalogo(): void
+ejecutarAltaRopa(): void
+ejecutarBajaRopa(): void
+ejecutarBuscarRopa(): void
+ejecutarMostrarCatalogo(): void
+menuClientes(): void
+menuPedidos(): void
+menuConsultasStreams(): void
+imprimirListaRopa(lista: ArrayList): void
+leerEntero(mensaje: String): int
+leerDouble(mensaje: String): double
+leerTextoObligatorio(mensaje: String): String
+leerBoolean(mensaje: String): boolean
+------------------------------------------------------------
 
+
+------------------------------------------------------------
+ Repositorio
+------------------------------------------------------------
+elementos: List
+------------------------------------------------------------
+Repositorio()
+agregar(elemento: T): void
+eliminar(elemento: T): boolean
+obtenerTodos(): List
+filtrar(condicion: Predicate): List
+------------------------------------------------------------
 
 
 
